@@ -35,7 +35,7 @@ namespace Hardverapro {
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) {
-            timer.Stop();
+            timer.Stop(); //debug-hoz kellett de lehet nem árt ha leáll a számláló mert ha sokáig kéri le az oldalt akkor összeakadhat
             List<string> previousads = gp.currentads;
 
             gp.RunTask();
@@ -53,7 +53,7 @@ namespace Hardverapro {
             } else if (previousads.Count != 0) {
 
             }
-            timer.Start();
+            timer.Start(); //fent
         }
 
         //Code by Microsoft mert nem igazán fogom fel egyelőre hogy hogy csinálja amit csinál
