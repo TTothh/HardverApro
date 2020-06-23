@@ -28,7 +28,7 @@ namespace Hardverapro {
         public ArrayList ads = new ArrayList();
 
         private void BtnStart_Click(object sender, EventArgs e) {
-            this.Text = "Tock";
+            this.Text = "0";
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
             timer.Enabled = true;
