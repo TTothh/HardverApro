@@ -22,12 +22,12 @@ namespace Hardverapro {
             }
         }
 
-        public static int GetNumber(this string responsebody) {
+        /*public static int GetNumber(this string responsebody) {
             string searchtext = "Találatok száma: ";
             string number = responsebody.Substring(responsebody.IndexOf(searchtext) + searchtext.Length, 2);
 
             return int.Parse(number);
-        }
+        }*/
 
         public static List<string> GetAds(this string response) {
             List<string> ads = new List<string>();

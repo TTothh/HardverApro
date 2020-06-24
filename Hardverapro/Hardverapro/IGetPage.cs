@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace Hardverapro {
     interface IGetPage {
         void GetPage();
-        void RunTask();
-        Task Main();
+        List<string> RunTask();
+        Task<List<string>> Main();
 
         int numberofresults { get; set; }
         List<string> currentads { get; set; }

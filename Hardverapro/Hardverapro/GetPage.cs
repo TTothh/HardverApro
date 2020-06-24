@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Windows.Forms.VisualStyles;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace Hardverapro {
     class GetPage : IGetPage {
@@ -23,24 +24,21 @@ namespace Hardverapro {
             httpClient = new HttpClient();
         }
 
-        void IGetPage.RunTask() {
-            throw new NotImplementedException();
+        List<string> IGetPage.RunTask() {
+            //return Task.FromResult<List<string>>()
+            throw new NotImplementedException("Soon™");
         }
 
-        async Task IGetPage.Main() {
+        async Task<List<string>> IGetPage.Main() {
             try {
                 HttpResponseMessage response = await httpClient.GetAsync("https://hardverapro.hu/aprok/hardver/videokartya/keres.php?stext=1660&county=&stcid=&settlement=&stmid=&minprice=&maxprice=&company=&cmpid=&user=&usrid=&selling=1&stext_none=");
                 response.EnsureSuccessStatusCode();
                 string responsebody = await response.Content.ReadAsStringAsync();
-                numberofresults = responsebody.GetNumber();
-                currentads = responsebody.GetAds();
-
-                Console.WriteLine(numberofresults);
-
-
+                return responsebody.GetAds();
             } catch (HttpRequestException e) {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
+                return new List<string>();
             }
         }
     }
