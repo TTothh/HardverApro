@@ -22,10 +22,8 @@ namespace Hardverapro {
         }
 
         readonly System.Timers.Timer timer = new System.Timers.Timer(10000);
-        readonly GetPage gp = new GetPage();
+        readonly GetPage gp = new GetPage(0, new List<string>());
         int currentresults = 0;
-
-        public ArrayList ads = new ArrayList();
 
         private void BtnStart_Click(object sender, EventArgs e) {
             this.Text = "0";
@@ -38,7 +36,7 @@ namespace Hardverapro {
             timer.Stop(); //debug-hoz kellett de lehet nem árt ha leáll a számláló mert ha sokáig kéri le az oldalt akkor összeakadhat
             List<string> previousads = gp.currentads;
 
-            gp.RunTask();
+            
 
             Thread thread = new Thread(new ThreadStart(SetText));
             thread.Start();

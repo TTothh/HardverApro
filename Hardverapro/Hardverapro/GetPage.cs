@@ -8,21 +8,26 @@ using System.Windows.Forms.VisualStyles;
 using System.Collections;
 
 namespace Hardverapro {
-    class GetPage {
-        private static readonly HttpClient httpClient;
+    class GetPage : IGetPage {
+        private HttpClient httpClient;
 
-        public int numberofresults = 0;
-        public List<string> currentads = new List<string>();
+        public GetPage(int nor, List<string> currads) {
+            numberofresults = nor;
+            currentads = currads;
+        }
 
-        static GetPage() {
+        public int numberofresults { get; set; }
+        public List<String> currentads { get; set; }
+
+        void IGetPage.GetPage() {
             httpClient = new HttpClient();
         }
 
-        public void RunTask() {
-            Task.Run(Main).Wait();
+        void IGetPage.RunTask() {
+            throw new NotImplementedException();
         }
 
-        async Task Main() {
+        async Task IGetPage.Main() {
             try {
                 HttpResponseMessage response = await httpClient.GetAsync("https://hardverapro.hu/aprok/hardver/videokartya/keres.php?stext=1660&county=&stcid=&settlement=&stmid=&minprice=&maxprice=&company=&cmpid=&user=&usrid=&selling=1&stext_none=");
                 response.EnsureSuccessStatusCode();
@@ -38,7 +43,5 @@ namespace Hardverapro {
                 Console.WriteLine("Message :{0} ", e.Message);
             }
         }
-
-
     }
 }
