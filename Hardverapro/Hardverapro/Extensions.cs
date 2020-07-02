@@ -22,24 +22,18 @@ namespace Hardverapro {
             }
         }
 
-        /*public static int GetNumber(this string responsebody) {
-            string searchtext = "Találatok száma: ";
-            string number = responsebody.Substring(responsebody.IndexOf(searchtext) + searchtext.Length, 2);
-
-            return int.Parse(number);
-        }*/
-
-        public static List<string> GetAds(this string response) {
-            List<string> ads = new List<string>();
+        public static List<Item> GetAds(this string response) {
+            List<Item> ads = new List<Item>();
             List<int> adtitles = response.AllIndexesOf("</a> <small class=");
 
-            for (int i = 0; i < adtitles.Count; i++) {
-                string current = response.Substring(adtitles[i] - 200, 200);
-                string final = current.Substring(current.LastIndexOf('>'));
+            //kell: 
+            string featured = @"<li class=" + "\"" + "media featured" + "\" " + "data-.*</li>.*<li";
 
-                ads.Add(final);
-            }
 
+
+            //itt volt a sok regexes szar. jó hogy elveszett mert legaláb töölni nem kell mert újra kell írni az egészet a faszba nulláról más logikával.
+
+            //rework
             return ads;
         }
 

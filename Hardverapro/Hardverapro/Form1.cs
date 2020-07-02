@@ -22,7 +22,7 @@ namespace Hardverapro {
         }
 
         readonly System.Timers.Timer timer = new System.Timers.Timer(10000);
-        readonly GetPage gp = new GetPage(0, new List<string>());
+        readonly ProcessPage page = new ProcessPage();
         int currentresults = 0;
 
         private void BtnStart_Click(object sender, EventArgs e) {
@@ -30,31 +30,28 @@ namespace Hardverapro {
             timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
             timer.Enabled = true;
+
+            page.GetPages();
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) {
-            timer.Stop(); //debug-hoz kellett de lehet nem árt ha leáll a számláló mert ha sokáig kéri le az oldalt akkor összeakadhat
-            List<string> previousads = gp.currentads;
-
-            
+            timer.Stop();
+            page.GetPages();
 
             Thread thread = new Thread(new ThreadStart(SetText));
             thread.Start();
             Thread.Sleep(1000);
 
-            if (gp.currentads.Count > previousads.Count) {
-                currentresults = gp.numberofresults;
+            if (page.numberofresults > currentresults) {
+                currentresults = page.numberofresults;
 
-                DialogResult msg = MessageBox.Show(Extensions.GetNewAds(gp.currentads, previousads), currentresults.ToString(), MessageBoxButtons.OK);
-            } else if (gp.numberofresults < currentresults) {
-                DialogResult msg = MessageBox.Show(Extensions.GetRemovedAds(previousads, gp.currentads), currentresults.ToString(), MessageBoxButtons.OK);
-            } else if (previousads.Count != 0) {
-
+                //DialogResult msg = MessageBox.Show(Extensions.GetNewAds(page.numberofresults, ads), currentresults.ToString(), MessageBoxButtons.OK);
+            } else if (page.numberofresults < currentresults) {
+                //DialogResult msg = MessageBox.Show(Extensions.GetRemovedAds(ads, page.currentads), currentresults.ToString(), MessageBoxButtons.OK);
             }
-            timer.Start(); //fent
+            timer.Start();
         }
 
-        //Code by Microsoft mert nem igazán fogom fel egyelőre hogy hogy csinálja amit csinál
         private delegate void SafeCallDelegate(string text);
         private void WriteTextSafe(string text) {
             if (this.InvokeRequired) {
